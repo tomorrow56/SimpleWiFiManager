@@ -1,11 +1,7 @@
 #ifndef WebUI_h
 #define WebUI_h
 
-#if defined(ESP8266)
-#include <ESP8266WebServer.h>
-#else
 #include <WebServer.h>
-#endif
 #include <DNSServer.h>
 #include <functional>
 

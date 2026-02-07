@@ -1,16 +1,16 @@
 # SimpleWiFiManager
 
-ESP8266/ESP32マイコン用のWebUIコンポーネントを分離したWiFiManagerライクなライブラリです。
+ESP32マイコン用のWebUIコンポーネントを分離したWiFiManagerライクなライブラリです。
 
 ## 概要
 
-SimpleWiFiManagerは、キャプティブポータルを使用してESP8266/ESP32デバイスのWiFi認証情報を簡単に設定する方法を提供します。このライブラリは、保守性とカスタマイズ性を向上させるために、WebUIコンポーネントを分離したモジュラー設計を特徴としています。
+SimpleWiFiManagerは、キャプティブポータルを使用してESP32デバイスのWiFi認証情報を簡単に設定する方法を提供します。このライブラリは、保守性とカスタマイズ性を向上させるために、WebUIコンポーネントを分離したモジュラー設計を特徴としています。
 
 ## 特徴
 
 - **簡単なWiFi設定**: Webインターフェースを通じてWiFi認証情報を設定
 - **キャプティブポータル**: 設定ページへの自動リダイレクト
-- **デュアルプラットフォーム対応**: ESP8266とESP32の両方に対応
+- **ESP32対応**: ESP32に対応
 - **モジュラー設計**: より良いコード構成のためにWebUIコンポーネントを分離
 - **テーマ切替**: ライト・ダークモードのWebUIテーマとトグルスイッチ
 - **カスタムパラメータ**: カスタム設定パラメータの追加
@@ -34,7 +34,7 @@ SimpleWiFiManagerは、キャプティブポータルを使用してESP8266/ESP3
 `platformio.ini`に追加:
 ```ini
 lib_deps = 
-    https://github.com/manus/SimpleWiFiManager.git
+    https://github.com/tomorrow56/SimpleWiFiManager.git
 ```
 
 ## クイックスタート
@@ -277,12 +277,10 @@ void saveConfigCallback() {
 
 ## サポートプラットフォーム
 
-- **ESP8266**: 全バリアント（NodeMCU、Wemos D1など）
 - **ESP32**: 全バリアント（ESP32-WROOM、ESP32-S2、ESP32-C3など）
 
 ## 依存関係
 
-- **ESP8266**: ESP8266WiFi、ESP8266WebServer、DNSServer
 - **ESP32**: WiFi、WebServer、DNSServer
 
 ## 設定ポータルインターフェース
@@ -440,7 +438,7 @@ void setup() {
 ### バージョン 1.0.0
 - 初回リリース
 - モジュラーWebUIアーキテクチャ
-- ESP8266/ESP32サポート
+- ESP32サポート
 - カスタムパラメータサポート
 - キャプティブポータル機能
 - ライト/ダークテーマ切替

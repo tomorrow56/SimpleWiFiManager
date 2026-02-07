@@ -1,16 +1,16 @@
 # SimpleWiFiManager
 
-A WiFiManager-like library with separated WebUI components for ESP8266/ESP32 microcontrollers.
+A WiFiManager-like library with separated WebUI components for ESP32 microcontrollers.
 
 ## Overview
 
-SimpleWiFiManager provides an easy way to configure WiFi credentials for ESP8266/ESP32 devices using a captive portal. The library features a modular design with separated WebUI components for better maintainability and customization.
+SimpleWiFiManager provides an easy way to configure WiFi credentials for ESP32 devices using a captive portal. The library features a modular design with separated WebUI components for better maintainability and customization.
 
 ## Features
 
 - **Easy WiFi Configuration**: Set up WiFi credentials through a web interface
 - **Captive Portal**: Automatic redirection to configuration page
-- **Dual Platform Support**: Compatible with both ESP8266 and ESP32
+- **ESP32 Support**: Compatible with ESP32
 - **Modular Design**: Separated WebUI components for better code organization
 - **Theme Switching**: Light and Dark mode WebUI themes with toggle switch
 - **Custom Parameters**: Add custom configuration parameters
@@ -34,7 +34,7 @@ SimpleWiFiManager provides an easy way to configure WiFi credentials for ESP8266
 Add to your `platformio.ini`:
 ```ini
 lib_deps = 
-    https://github.com/manus/SimpleWiFiManager.git
+    https://github.com/tomorrow56/SimpleWiFiManager.git
 ```
 
 ## Quick Start
@@ -277,12 +277,10 @@ This separation allows for:
 
 ## Supported Platforms
 
-- **ESP8266**: All variants (NodeMCU, Wemos D1, etc.)
 - **ESP32**: All variants (ESP32-WROOM, ESP32-S2, ESP32-C3, etc.)
 
 ## Dependencies
 
-- **ESP8266**: ESP8266WiFi, ESP8266WebServer, DNSServer
 - **ESP32**: WiFi, WebServer, DNSServer
 
 ## Configuration Portal Interface
@@ -440,7 +438,7 @@ void setup() {
 ### Version 1.0.0
 - Initial release
 - Modular WebUI architecture
-- ESP8266/ESP32 support
+- ESP32 support
 - Custom parameter support
 - Captive portal functionality
 - Light/Dark theme switching

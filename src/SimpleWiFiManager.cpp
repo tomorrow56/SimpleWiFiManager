@@ -84,30 +84,19 @@ boolean SimpleWiFiManager::autoConnect(char const *apName, char const *apPasswor
 
   if (WiFi.SSID() != "") {
     DEBUG_WM(F("Using last saved values, should be faster"));
- #if defined(ESP8266)
-    ETS_UART_INTR_DISABLE();
-    wifi_station_disconnect();
-    ETS_UART_INTR_ENABLE();
- #else
-    WiFi.disconnect();
- #endif
+  }
 
-    if (connectWifi("", "") == WL_CONNECTED) {
-      DEBUG_WM(F("IP Address:"));
-      DEBUG_WM(WiFi.localIP());
-      return true;
-    }
+  if (connectWifi("", "") == WL_CONNECTED) {
+    DEBUG_WM(F("IP Address:"));
+    DEBUG_WM(WiFi.localIP());
+    return true;
   }
 
   return startConfigPortal(apName, apPassword);
 }
 
 boolean SimpleWiFiManager::configPortalHasTimeout(){
- #if defined(ESP8266)
-    if(_configPortalTimeout == 0 || wifi_softap_get_station_num() > 0){
- #else
     if(_configPortalTimeout == 0 || WiFi.softAPgetStationNum() > 0){
- #endif
         _configPortalStart = millis();
     }
     return (millis() > _configPortalStart + _configPortalTimeout);
@@ -212,9 +201,10 @@ int SimpleWiFiManager::connectWifi(String ssid, String pass) {
   DEBUG_WM(F("Connecting as wifi client..."));
 
   if (ssid.length() > 0) {
-    resetSettings();
-
     WiFi.mode(WIFI_STA);
+
+    WiFi.persistent(true);
+    WiFi.setAutoReconnect(true);
 
     if (_sta_static_ip) {
       DEBUG_WM(F("Custom STA IP/GW/Subnet"));
@@ -223,6 +213,8 @@ int SimpleWiFiManager::connectWifi(String ssid, String pass) {
     }
     WiFi.begin(ssid.c_str(), pass.c_str());
   } else {
+    WiFi.persistent(true);
+    WiFi.setAutoReconnect(true);
     WiFi.begin();
   }
 
@@ -395,11 +387,7 @@ void SimpleWiFiManager::handleWifi(boolean scan) {
           rssiQ += quality;
           item.replace("{v}", WiFi.SSID(indices[i]));
           item.replace("{r}", rssiQ);
-#if defined(ESP8266)
-          if (WiFi.encryptionType(indices[i]) != ENC_TYPE_NONE) {
-#else
           if (WiFi.encryptionType(indices[i]) != WIFI_AUTH_OPEN) {
-#endif
             item.replace("{i}", "l");
           } else {
             item.replace("{i}", "");

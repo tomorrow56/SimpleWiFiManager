@@ -1,25 +1,13 @@
 #ifndef SimpleWiFiManager_h
 #define SimpleWiFiManager_h
 
-#if defined(ESP8266)
-#include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
-#else
 #include <WiFi.h>
 #include <WebServer.h>
-#endif
 #include <DNSServer.h>
 #include <memory>
 
-#if defined(ESP8266)
-extern "C" {
-  #include "user_interface.h"
-}
-#define ESP_getChipId()   (ESP.getChipId())
-#else
 #include <esp_wifi.h>
 #define ESP_getChipId()   ((uint32_t)ESP.getEfuseMac())
-#endif
 
 #ifndef WIFI_MANAGER_MAX_PARAMS
 #define WIFI_MANAGER_MAX_PARAMS 10
@@ -97,11 +85,7 @@ class SimpleWiFiManager
 
   private:
     std::unique_ptr<DNSServer>        _dnsServer;
-#ifdef ESP8266
-    std::unique_ptr<ESP8266WebServer> _server;
-#else
     std::unique_ptr<WebServer>        _server;
-#endif
 
     // WebUI object
     WebUI* _webUI;
@@ -171,7 +155,7 @@ class SimpleWiFiManager
       return  obj->fromString(s);
     }
     auto optionalIPFromString(...) -> bool {
-      DEBUG_WM("NO fromString METHOD ON IPAddress, you need ESP8266 core 2.1.0 or newer for Custom IP configuration to work.");
+      DEBUG_WM("NO fromString METHOD ON IPAddress, you need a core new enough for Custom IP configuration to work.");
       return false;
     }
 };
