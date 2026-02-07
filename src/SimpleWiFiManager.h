@@ -42,6 +42,8 @@ class WiFiManagerParameter {
     int         getValueLength();
     const char *getCustomHTML();
 
+    void        setValue(const char *defaultValue, int length);
+
   private:
     const char *_id;
     const char *_placeholder;

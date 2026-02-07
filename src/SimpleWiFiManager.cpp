@@ -59,6 +59,13 @@ SimpleWiFiManager::SimpleWiFiManager() {
   _webUI = nullptr;
 }
 
+SimpleWiFiManager::~SimpleWiFiManager() {
+  if (_webUI != nullptr) {
+    delete _webUI;
+    _webUI = nullptr;
+  }
+}
+
 void SimpleWiFiManager::addParameter(WiFiManagerParameter *p) {
   _params[_paramsCount] = p;
   _paramsCount++;
@@ -77,9 +84,13 @@ boolean SimpleWiFiManager::autoConnect(char const *apName, char const *apPasswor
 
   if (WiFi.SSID() != "") {
     DEBUG_WM(F("Using last saved values, should be faster"));
+ #if defined(ESP8266)
     ETS_UART_INTR_DISABLE();
     wifi_station_disconnect();
     ETS_UART_INTR_ENABLE();
+ #else
+    WiFi.disconnect();
+ #endif
 
     if (connectWifi("", "") == WL_CONNECTED) {
       DEBUG_WM(F("IP Address:"));
@@ -92,7 +103,11 @@ boolean SimpleWiFiManager::autoConnect(char const *apName, char const *apPasswor
 }
 
 boolean SimpleWiFiManager::configPortalHasTimeout(){
+ #if defined(ESP8266)
     if(_configPortalTimeout == 0 || wifi_softap_get_station_num() > 0){
+ #else
+    if(_configPortalTimeout == 0 || WiFi.softAPgetStationNum() > 0){
+ #endif
         _configPortalStart = millis();
     }
     return (millis() > _configPortalStart + _configPortalTimeout);
