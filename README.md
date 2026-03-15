@@ -1,4 +1,4 @@
-# SimpleWiFiManager
+# ESP32 SimpleWiFiManager
 
 A WiFiManager-like library with separated WebUI components for ESP32 microcontrollers.
 
